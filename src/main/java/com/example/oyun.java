@@ -99,7 +99,7 @@ public class oyun extends masa
             }
 
             if (onGame.get(8).size()==0 && onGame.get(9).size()==0 &&
-             onGame.get(10).size()==0 && onGame.get(11).size()==0 )
+             onGame.get(10).size()==0 && onGame.get(11).size()==0 && onGame.get(12).size() !=0 )
             {
                 System.out.println("12. card:  "+ ((deste) onGame.get(12).get(0)).getSayi()+" | "
                 +((deste) onGame.get(12).get(0)).getDesen());
