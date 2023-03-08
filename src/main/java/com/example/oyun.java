@@ -26,7 +26,6 @@ public class oyun extends masa
     }
     public static ArrayList<LinkedList> oyna() 
     {   int elde=0;
-        int adet=0;
         do
         {
             for (int i=0;i<8;i++)
@@ -50,8 +49,14 @@ public class oyun extends masa
                 {
                 System.out.println("8. card: "+((deste) onGame.get(8).get(0)).getSayi()
                 +" | "+((deste) onGame.get(8).get(0)).getDesen());
+                if(onGame.get(8).size() >=2 &&
+                ((deste) onGame.get(8).get(0)).getSayi()== ((deste) onGame.get(8).get(1)).getSayi())
+                    {
+                        System.out.println("  | Sayi ust uste !");
+                    }
                 }
                 
+
             }
             if (onGame.get(2).size() == 0 && onGame.get(3).size()==0)
             {
@@ -59,6 +64,11 @@ public class oyun extends masa
                 {
                 System.out.println("9. card: "+((deste) onGame.get(9).get(0)).getSayi()
                 +" | "+((deste) onGame.get(9).get(0)).getDesen());
+                if(onGame.get(9).size() >=2 &&
+                ((deste) onGame.get(9).get(0)).getSayi()== ((deste) onGame.get(9).get(1)).getSayi())
+                    {
+                        System.out.println("  | Sayi ust uste !");
+                    }
                 }
             }
             if (onGame.get(4).size() == 0 && onGame.get(5).size()==0)
@@ -67,6 +77,11 @@ public class oyun extends masa
                 {
                 System.out.println("10. card: "+((deste) onGame.get(10).get(0)).getSayi()
                 +" | "+((deste) onGame.get(10).get(0)).getDesen());
+                if(onGame.get(10).size() >=2 &&
+                ((deste) onGame.get(10).get(0)).getSayi()== ((deste) onGame.get(10).get(1)).getSayi())
+                    {
+                        System.out.println("  | Sayi ust uste !");
+                    }
                 }
             }
             if (onGame.get(6).size() == 0 && onGame.get(7).size()==0)
@@ -75,21 +90,21 @@ public class oyun extends masa
                 {
                 System.out.println("11. card: "+((deste) onGame.get(11).get(0)).getSayi()
                 +" | "+((deste) onGame.get(11).get(0)).getDesen());
+                if(onGame.get(11).size() >=2 &&
+                ((deste) onGame.get(11).get(0)).getSayi()== ((deste) onGame.get(11).get(1)).getSayi())
+                    {
+                        System.out.println("  | Sayi ust uste !");
+                    }
                 }
             }
-            for (int i=8;i<12;i++)
-            {
-                if (onGame.get(i).size()==0)
-                {
-                    adet++;
-                }
-            }
-            if (adet >=3)
+
+            if (onGame.get(8).size()==0 && onGame.get(9).size()==0 &&
+             onGame.get(10).size()==0 && onGame.get(11).size()==0 )
             {
                 System.out.println("12. card:  "+ ((deste) onGame.get(12).get(0)).getSayi()+" | "
                 +((deste) onGame.get(12).get(0)).getDesen());
             }
-            adet=0;
+            
             String check="+";
             if (onGame.get(13).size()!=0)
             {
@@ -134,18 +149,39 @@ public class oyun extends masa
            boolean deleted=true;
            do{
            do{
-                Scanner delete1 = new Scanner(System.in);
-                sil1 = delete1.nextInt();
+                do
+                {
+                    Scanner delete1 = new Scanner(System.in);
+                    while (!delete1.hasNextInt()) delete1.next();
+                    sil1=delete1.nextInt();
+                    if (sil1>13 || sil1<0)
+                    {
+                        System.out.println("THE NUMBER MUST BE BETWEEN 1-13 !");
+                    }
+
+                }while (sil1<0 || sil1>13);
+                
                 
                 if (onGame.get(sil1).size() == 0)
                 {
                     System.out.println("please enter another number for delete1 !");
                 }
+                
 
-           }while(onGame.get(sil1).size() == 0 );
+           }while(onGame.get(sil1).size() == 0);
            do{
+
+            do
+            {
                 Scanner delete2 = new Scanner(System.in);
+                while (!delete2.hasNextInt()) delete2.next();
                 sil2=delete2.nextInt();
+                if (sil2>13 || sil2<0)
+                {
+                    System.out.println("THE NUMBER MUST BE BETWEEN 1-13 !");
+                }
+
+            }while (sil2<0 || sil2>13);
                 if (onGame.get(sil2).size() == 0)
                 {
                     System.out.println("please enter another number for delete2 !");
@@ -183,13 +219,26 @@ public class oyun extends masa
             deleted=false;
             continue;
            }
-           else if(sil1==13 && sil2==13 &&((deste) onGame.get(sil2).get(elde)).getSayi() 
-           ==((deste) onGame.get(sil1).get(elde+1)).getSayi())
+           else if(sil1==13 && sil2==13)
            {
+            if (onGame.get(sil1).get(elde)==onGame.get(sil1).getLast() && ((deste) onGame.get(sil1).get(elde)).getSayi()==
+            ((deste) onGame.get(sil1).get(0)).getSayi())
+            {
+                onGame.get(sil1).remove(elde);
+                onGame.get(sil2).remove(0);
+                deleted=false;
+                continue;
+            }
+            else if (((deste) onGame.get(sil2).get(elde)).getSayi() 
+            ==((deste) onGame.get(sil1).get(elde+1)).getSayi())
+            {
                 onGame.get(sil1).remove(elde);
                 onGame.get(sil2).remove(elde);
                 deleted=false;
                 continue;
+                
+            }
+                
            }
            else 
            {
@@ -205,7 +254,6 @@ public class oyun extends masa
     public static boolean devam(ArrayList <LinkedList> control)
     {
         LinkedList<deste> onuc = new LinkedList<>(control.get(13));
-        int adet=0;
         int res=0;
         boolean result = false;
         for (int i = 0;i < control.size();i++)
@@ -230,21 +278,10 @@ public class oyun extends masa
             {
                 continue;
             }
-            else if (i==12)
+            else if (i==12 && (control.get(8).size()!=0 || control.get(9).size()!=0 || 
+            control.get(10).size()!=0 || control.get(11).size()!=0  ))
             {
-                for (int n=8;n<12;n++)
-                {
-                    if (control.get(n).size()==0)
-                    {
-                        adet++;
-                    }
-                }
-                if (adet>=3)
-                {
-                    res=((deste) control.get(12).get(0)).getSayi();
-                    
-                }
-                adet =0;
+                continue;
             }
             else if (i==13 && onuc.size()>=2)
             {
@@ -263,10 +300,20 @@ public class oyun extends masa
                 }
             }
 
-            if (i!=12 && i!=13)
+            if (i!=13)
             {
                 res = ((deste) control.get(i).get(0)).getSayi();
+                if ( control.get(i).size()>=2)
+                {
+                    if (((deste) control.get(i).get(1)).getSayi()== res )
+                     {
+                        result=true;
+                        return result;
+                     }
+                }
+                
             }
+            
             
             for (int j = i+1;j < control.size();j++)
             {
@@ -290,31 +337,17 @@ public class oyun extends masa
                 {
                     continue;
                 } 
-                else if (j==12)
+                else if (j==12 && (control.get(8).size()!=0 || control.get(9).size()!=0 || 
+                control.get(10).size()!=0 || control.get(11).size()!=0  ))
             {
-                for (int n=8;n<12;n++)
-                {
-                    if (control.get(n).size()==0)
-                    {
-                        adet++;
-                    }
-                }
-                if (adet>=3)
-                {
-                    if(res==((deste) control.get(12).get(0)).getSayi())
-                    {
-                        result = true;
-                        return result;
-                    }
-                }
-                adet =0;
+                continue;
             }
                 if (res==((deste) control.get(j).get(0)).getSayi() && j!=13)
                 {
                     result = true;
                     return result;
                 }
-                if (j==13 && control.get(j).size()!=0)
+                else if (j==13 && control.get(j).size()!=0 && i<13)
                 {
                     for (deste a : onuc)
                     {
